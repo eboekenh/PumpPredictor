@@ -1,54 +1,113 @@
-
 # 💧 Pump It Up: Data Mining the Water Table
-## End to End Machine Learning Project for Predictive Maintenance Based on Historical Pump Data
 
-This project is based on the [DrivenData competition](https://www.drivendata.org/competitions/7/pump-it-up-data-mining-the-water-table/), which focuses on predicting the operational status of water pumps in Tanzania.
+> **End-to-end Machine Learning project for predictive maintenance of water pumps in Tanzania — built for social impact.**
 
-The goal is to build a machine learning model that can classify whether a water pump is:
-
-- **Functional**
-- **Functional needs repair**
-- **Non-functional**
-
-Understanding and optimizing water resource infrastructure is critical for public health and development. This project demonstrates how data science can be applied to real-world social impact challenges.
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
+[![Scikit-learn](https://img.shields.io/badge/Scikit--learn-ML-orange.svg)](https://scikit-learn.org/)
+[![Status](https://img.shields.io/badge/Status-In%20Progress-yellow.svg)]()
+[![License](https://img.shields.io/badge/License-MIT-green.svg)]()
 
 ---
 
-## 📦 Project Structure (initial setup)
+## 📖 About the Project
 
+This project is based on the [DrivenData "Pump It Up" competition](https://www.drivendata.org/competitions/7/pump-it-up-data-mining-the-water-table/), which focuses on predicting the operational status of water pumps in Tanzania.
+
+Understanding and optimizing water resource infrastructure is critical for public health and development across Sub-Saharan Africa. This project demonstrates how data science can be applied to real-world social impact challenges.
+
+---
+
+## 🎯 Problem Statement
+
+Build a multi-class classifier to predict whether a given water pump is:
+
+| Label | Description |
+|---|---|
+| ✅ `functional` | Pump is operational |
+| ⚠️ `functional needs repair` | Pump works but requires maintenance |
+| ❌ `non functional` | Pump is not working |
+
+---
+
+## ✨ Features
+
+- **End-to-end ML pipeline**: from raw data ingestion to packaged model
+- **Multi-class classification** on real-world geospatial & categorical data
+- **Reproducible structure** with `setup.py` for installable packaging
+- **Mentoring-ready**: designed as a teaching project for ReDI School students
+
+---
+
+## 🔧 Tech Stack
+
+| Tool | Purpose |
+|---|---|
+| Python 3.8 | Core language |
+| Pandas, NumPy | Data manipulation |
+| Scikit-learn | ML modeling & evaluation |
+| Matplotlib / Seaborn | Visualization |
+| Git & GitHub | Version control |
+| VS Code + Anaconda | Development environment |
+
+---
+
+## 📦 Project Structure
+
+```
 pumpitup/
 │
 ├── README.md
-├── setup.py
+├── setup.py               # Installable package config
 ├── requirements.txt
 ├── .gitignore
-├── venv/ # virtual environment (not pushed to GitHub)
-└── src/ # source code
-└── init.py
-
-
----
-
-## 🔧 Technologies Used
-
-- Python 3.8
-- Pandas, NumPy, Scikit-learn
-- Matplotlib / Seaborn (optional)
-- Git & GitHub
-- VS Code + Anaconda
+├── venv/                  # Virtual environment (not pushed)
+└── src/
+    └── __init__.py        # Source code package
+```
 
 ---
 
-## 📌 Status
-🚧 **In Progress** — This is the initial setup for a reproducible and deployable machine learning project structure. The pipeline will be expanded to include:
-- Data cleaning & preprocessing
-- Feature engineering
-- Model training & evaluation
-- Deployment-ready packaging (`setup.py`)
+## 🗺️ Roadmap
+
+- [x] Project setup & reproducible structure
+- [ ] Data cleaning & preprocessing
+- [ ] Exploratory Data Analysis (EDA)
+- [ ] Feature engineering
+- [ ] Model training & evaluation (Random Forest, XGBoost)
+- [ ] Hyperparameter tuning
+- [ ] Deployment-ready packaging
 
 ---
 
-## ✨ Acknowledgment
+## 🚀 Getting Started
 
-This project is part of my mentoring activities for ReDI Digital Integration School, helping students practice real-world data science workflows using the “Pump it Up” challenge.
+```bash
+# Clone the repository
+git clone https://github.com/eboekenh/PumpPredictor.git
+cd PumpPredictor
 
+# Create and activate virtual environment
+python -m venv venv
+source venv/bin/activate   # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+## ✨ Acknowledgements
+
+This project is part of my mentoring activities for **[ReDI Digital Integration School](https://www.redi-school.org/)**, helping students practice real-world data science workflows using the "Pump It Up" challenge.
+
+---
+
+## 👤 Author
+
+**[@eboekenh](https://github.com/eboekenh)**
