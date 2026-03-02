@@ -102,12 +102,3 @@ This project is licensed under the MIT License.
 
 ---
 
-## ✨ Acknowledgements
-
-This project is part of my mentoring activities for **[ReDI Digital Integration School](https://www.redi-school.org/)**, helping students practice real-world data science workflows using the "Pump It Up" challenge.
-
----
-
-## 👤 Author
-
-**[@eboekenh](https://github.com/eboekenh)**
