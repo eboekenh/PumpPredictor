@@ -54,26 +54,46 @@ Build a multi-class classifier to predict whether a given water pump is:
 ## 📦 Project Structure
 
 ```
-pumpitup/
-│
+PumpPredictor/
 ├── README.md
-├── setup.py               # Installable package config
+├── setup.py                         # Installable package config
 ├── requirements.txt
 ├── .gitignore
-├── venv/                  # Virtual environment (not pushed)
-└── src/
-    └── __init__.py        # Source code package
+├── artifacts/                       # Model artifacts (not committed)
+│   └── model.joblib
+├── scripts/
+│   ├── train.py                     # CLI: train a classifier
+│   └── predict.py                   # CLI: generate predictions
+├── src/
+│   └── pumpitup/
+│       ├── config.py                # Constants & default paths
+│       ├── data/
+│       │   ├── io.py                # CSV loading & saving
+│       │   └── synthetic.py        # Synthetic dataset generator
+│       ├── features/
+│       │   └── preprocess.py       # ColumnTransformer pipeline
+│       ├── models/
+│       │   ├── train.py             # train_model, save_model
+│       │   └── predict.py          # load_model, predict
+│       └── evaluation/
+│           └── metrics.py          # accuracy, f1_macro
+└── tests/
+    └── test_smoke_pipeline.py       # Smoke tests
 ```
+
+> **Note:** The DrivenData dataset is **not committed** to this repository.
+> Download it from [DrivenData](https://www.drivendata.org/competitions/7/pump-it-up-data-mining-the-water-table/data/)
+> and supply paths via CLI arguments (see below).
 
 ---
 
 ## 🗺️ Roadmap
 
 - [x] Project setup & reproducible structure
-- [ ] Data cleaning & preprocessing
-- [ ] Exploratory Data Analysis (EDA)
-- [ ] Feature engineering
-- [ ] Model training & evaluation (Random Forest, XGBoost)
+- [x] Modular package under `src/pumpitup/`
+- [x] Synthetic data generator for local smoke tests
+- [x] End-to-end training + inference pipeline
+- [x] CLI entrypoints (`scripts/train.py`, `scripts/predict.py`)
 - [ ] Hyperparameter tuning
 - [ ] Deployment-ready packaging
 
@@ -90,8 +110,49 @@ cd PumpPredictor
 python -m venv venv
 source venv/bin/activate   # On Windows: venv\Scripts\activate
 
-# Install dependencies
+# Install dependencies (includes the pumpitup package in editable mode)
 pip install -r requirements.txt
+```
+
+---
+
+## 🏋️ Training
+
+### On synthetic data (no real dataset required)
+
+```bash
+python scripts/train.py
+```
+
+This generates 500 synthetic samples, trains a Random Forest classifier, prints
+in-sample metrics, and saves the model to `artifacts/model.joblib`.
+
+### On real DrivenData CSVs
+
+```bash
+python scripts/train.py \
+    --train-csv data/train_values.csv \
+    --target status_group \
+    --model-output artifacts/model.joblib
+```
+
+---
+
+## 🔮 Predicting
+
+```bash
+python scripts/predict.py \
+    --model artifacts/model.joblib \
+    --input data/test_values.csv \
+    --output artifacts/predictions.csv
+```
+
+---
+
+## 🧪 Running Tests
+
+```bash
+pytest tests/
 ```
 
 ---

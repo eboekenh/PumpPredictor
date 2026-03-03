@@ -37,7 +37,7 @@ setup(
     version='0.0.1',  # Initial version
     author= 'Ecem',
     author_email = 'ecemboekenheide@gmail.com', # Contact email
-    packages =find_packages(), # Automatically discover all packages in the project
-    install_requires = get_requirements('requirements.txt')
-    
+    package_dir={"": "src"},  # Root package directory is src/
+    packages=find_packages(where="src"),  # Automatically discover packages under src/
+    install_requires = get_requirements('requirements.txt'),
     )
