@@ -80,3 +80,40 @@ def save_model(pipeline: Pipeline, path: str) -> None:
     """
     os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
     joblib.dump(pipeline, path)
+
+
+def get_feature_importances(pipeline: Pipeline) -> pd.DataFrame:
+    """Extract feature importances from a fitted pipeline.
+
+    The pipeline must have a ``preprocessor`` step (a ``ColumnTransformer``)
+    and a ``classifier`` step that exposes ``feature_importances_``.
+
+    Args:
+        pipeline: Fitted sklearn ``Pipeline`` produced by :func:`train_model`.
+
+    Returns:
+        DataFrame with columns ``feature`` and ``importance``, sorted by
+        importance descending.
+
+    Raises:
+        AttributeError: If the classifier does not have ``feature_importances_``.
+    """
+    preprocessor = pipeline.named_steps["preprocessor"]
+    classifier = pipeline.named_steps["classifier"]
+
+    # Collect names from each transformer in the ColumnTransformer
+    feature_names: list[str] = []
+    for name, transformer, cols in preprocessor.transformers_:
+        if name == "remainder":
+            continue
+        if hasattr(transformer, "get_feature_names_out"):
+            feature_names.extend(transformer.get_feature_names_out(cols).tolist())
+        else:
+            feature_names.extend(cols)
+
+    importances = classifier.feature_importances_
+    return (
+        pd.DataFrame({"feature": feature_names, "importance": importances})
+        .sort_values("importance", ascending=False)
+        .reset_index(drop=True)
+    )

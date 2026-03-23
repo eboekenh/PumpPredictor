@@ -51,10 +51,11 @@ Raw Data → EDA → Preprocessing → Feature Engineering → Model Training �
 - **Encoding:** LabelEncoder fitted on combined train+test to ensure consistent mappings
 - **Scaling:** StandardScaler on numerical features (fitted on train only)
 
-### 3. Feature Engineering
+### 3. Feature Engineering  (`src/pumpitup/features/engineering.py`)
 - **Date features:** Pump age, age category, recording month/season
 - **Geographical features:** Haversine distance from Tanzania center, elevation categories
 - **Aggregation features:** Per-region/basin/installer statistics (pump count, avg age, failure rate)
+  — aggregations are derived **only** from training data to avoid leakage
 
 ### 4. Models
 Three classifiers compared with consistent evaluation:
@@ -77,17 +78,22 @@ PumpPredictor/
 │   │   ├── io.py                    # CSV loading & saving
 │   │   └── synthetic.py             # Synthetic dataset generator
 │   ├── features/
-│   │   └── preprocess.py            # ColumnTransformer pipeline
+│   │   ├── preprocess.py            # ColumnTransformer pipeline
+│   │   └── engineering.py           # Feature engineering (age, geo, aggregations)
 │   ├── models/
-│   │   ├── train.py                 # Model training
+│   │   ├── train.py                 # Model training + feature importance
 │   │   └── predict.py               # Inference
-│   └── evaluation/
-│       └── metrics.py               # Accuracy, F1 (macro)
+│   ├── evaluation/
+│   │   └── metrics.py               # Accuracy, F1, cross-validation, model comparison
+│   └── visualization/
+│       └── plots.py                 # EDA & model evaluation plots
 ├── scripts/
 │   ├── train.py                     # CLI: train a classifier
 │   └── predict.py                   # CLI: generate predictions
 ├── tests/
-│   └── test_smoke_pipeline.py       # Smoke tests (pytest)
+│   ├── test_smoke_pipeline.py           # Smoke tests (pytest)
+│   ├── test_feature_engineering.py      # Feature engineering unit tests
+│   └── test_visualization_and_evaluation.py  # Visualization & evaluation tests
 ├── data/                            # Place competition CSVs here
 ├── artifacts/                       # Saved models (not committed)
 ├── requirements.txt
