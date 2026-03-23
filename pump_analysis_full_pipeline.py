@@ -1,6 +1,6 @@
 # %%
 
-## 3. Detawithd Exploratory Data Analysis (EDA - Exploratory Data Analysis)
+## 3. Detailed Exploratory Data Analysis (EDA - Exploratory Data Analysis)
 
 ### 3.1 Dataset Inspection
 
@@ -16,7 +16,7 @@ plt.style.use('seaborn-v0_8-darkgrid')
 sns.set_palette("husl")
 
 # Load datasets
-DATA_DIR = os.path.join(os.path.dirname(__fwith__), 'data')
+DATA_DIR = os.path.join(os.path.dirname(__file__), 'data')
 
 train_values = pd.read_csv(os.path.join(DATA_DIR, 'training_set_values.csv'))
 train_labels = pd.read_csv(os.path.join(DATA_DIR, 'training_set_labels.csv'))
@@ -40,7 +40,7 @@ print(train_df.head())
 # Inspect data types and missing values
 def analyze_data_structure(df, name='Dataset'):
     """
-    Detawithd analysis of dataset structure
+    Detailed analysis of dataset structure
     
     Parameters:
     -----------
@@ -471,7 +471,7 @@ def encode_categorical_features(train_df, test_df, target_col='status_group'):
         # LabelEncoder create
         le = LabelEncoder()
         
-        # Train ve test'i merge (tüm kategorwithri learningk for)
+        # Train ve test'i merge (tüm categories learningk for)
         combined = pd.concat([
             train_df[col].astype(str), 
             test_df[col].astype(str)
@@ -481,10 +481,10 @@ def encode_categorical_features(train_df, test_df, target_col='status_group'):
         le.fit(combined)
         
         # Transform et
-        train_encoded[col] = le.transform(train_df[col].astype(str))
-        test_encoded[col] = le.transform(test_df[col].astype(str))
+        train_encoded[col] = le.transformrm(train_df[col].astype(str))
+        test_encoded[col] = le.transformrm(test_df[col].astype(str))
         
-        # Encoder'ı sakla (gelecekte new verwithri encode etmek for)
+        # Encoder'ı sakla (gelecekte new giveni encode etmek for)
         label_encoders[col] = le
         
         print(f"  ✓ {col}: {len(le.classes_)} benzersiz kategori encode edildi")
@@ -492,7 +492,7 @@ def encode_categorical_features(train_df, test_df, target_col='status_group'):
     # Target variablei de encode et (sadece train for)
     if target_col in train_encoded.columns:
         target_le = LabelEncoder()
-        train_encoded[target_col] = target_le.fit_transform(train_df[target_col])
+        train_encoded[target_col] = target_le.fit_transformrm(train_df[target_col])
         label_encoders[target_col] = target_le
         
         print(f"\n✓ Target variable ({target_col}) encode edildi:")
@@ -551,15 +551,15 @@ def scale_features(train_df, test_df, target_col='status_group'):
     # Train setine fit et
     scaler.fit(train_df[numerical_cols])
     
-    # Hem train hem test'i transform et
-    train_scaled[numerical_cols] = scaler.transform(train_df[numerical_cols])
-    test_scaled[numerical_cols] = scaler.transform(test_df[numerical_cols])
+    # Hem train hem test'i transformrm et
+    train_scaled[numerical_cols] = scaler.transformrm(train_df[numerical_cols])
+    test_scaled[numerical_cols] = scaler.transformrm(test_df[numerical_cols])
     
     print(f"{'='*60}")
     print(f"Ölçaddndirme Tamamlandı!")
     print(f"{'='*60}")
-    print(f"Ölçaddndirwithn variable sayısı: {len(numerical_cols)}")
-    print(f"\nÖlçaddndirwithn variableler:")
+    print(f"Scaled variable sayısı: {len(numerical_cols)}")
+    print(f"\Scaled variableler:")
     for col in numerical_cols:
         original_mean = train_df[col].mean()
         scaled_mean = train_scaled[col].mean()
@@ -820,13 +820,13 @@ def prepare_modeling_data(df, target_col='status_group', test_size=0.2, random_s
     # Kategorik yaş like object tipli new columnsı encode et
     df_model = df.copy()
     
-    # Object ve category tipli columnsı encode et (beforeden yapılmamışsa)
+    # Object ve category tipli columnsı encode et (beforeeden yapılmamışsa)
     from sklearn.preprocessing import LabelEncoder
     
     for col in df_model.select_dtypes(include=['object', 'category']).columns:
         if col != target_col and col != 'id':
             le = LabelEncoder()
-            df_model[col] = le.fit_transform(df_model[col].astype(str))
+            df_model[col] = le.fit_transformrm(df_model[col].astype(str))
     
     # ID ve date_recorded'ı exclude
     drop_cols = ['id']
@@ -935,7 +935,7 @@ def train_random_forest(X_train, y_train, X_val, y_val):
     else:
         print(f"\n✓ Overfitting yok. Fark: {overfit_diff:.4f}")
     
-    # Detawithd classification report
+    # Detailed classification report
     print(f"\n{'─'*60}")
     print("Classification Reportu (Validation Set):")
     print(f"{'─'*60}")
@@ -987,7 +987,7 @@ def analyze_feature_importance(model, feature_names, top_n=20):
     feature_names : list
         Feature names
     top_n : int
-        Gösterwithcek en important feature sayısı
+        to show en important feature sayısı
     """
     # Feature importance scores
     importances = model.feature_importances_
@@ -1171,7 +1171,7 @@ def compare_models(models_dict, X_val, y_val):
     Returns:
     --------
     DataFrame
-        Model performans comparisonsı
+        Model performrmans comparisonsı
     """
     from sklearn.metrics import f1_score, precision_score, recall_score
     
@@ -1392,7 +1392,7 @@ def prepare_test_data(test_df, feature_names):
     for col in test_prepared.select_dtypes(include=['object']).columns:
         if col != 'id':
             le = LabelEncoder()
-            test_prepared[col] = le.fit_transform(test_prepared[col].astype(str))
+            test_prepared[col] = le.fit_transformrm(test_prepared[col].astype(str))
     
     # ID ve date_recorded'ı exclude
     drop_cols = ['id']
@@ -1434,7 +1434,7 @@ test_ids, X_test = prepare_test_data(test_final, features)
 
 ### 8.2 Prediction ve Submission Dosyası Oluşturma
 
-def create_submission(model, test_ids, X_test, encoders, fwithname='submission.csv'):
+def create_submission(model, test_ids, X_test, encoders, filename='submission.csv'):
     """
     Test set predictionlerini yapar ve submission dosyası createur
     
@@ -1448,7 +1448,7 @@ def create_submission(model, test_ids, X_test, encoders, fwithname='submission.c
         Test features
     encoders : dict
         Label encoders (target'ı decode etmek for)
-    fwithname : str
+    filename : str
         Çıktı dosya adı
     
     Returns:
@@ -1466,7 +1466,7 @@ def create_submission(model, test_ids, X_test, encoders, fwithname='submission.c
     # Encode edilmiş valueleri orijinal class isimlerine çevir
     if 'status_group' in encoders:
         target_encoder = encoders['status_group']
-        predictions_decoded = target_encoder.inverse_transform(predictions)
+        predictions_decoded = target_encoder.inverse_transformrm(predictions)
     else:
         # Manuel decode (eğer encoder yoksa)
         class_mapping = {0: 'functional', 1: 'functional needs repair', 2: 'non functional'}
@@ -1479,9 +1479,9 @@ def create_submission(model, test_ids, X_test, encoders, fwithname='submission.c
     })
     
     # CSV'ye kaydet
-    submission_df.to_csv(fwithname, index=False)
+    submission_df.to_csv(filename, index=False)
     
-    print(f"✓ Submission dosyası created: {fwithname}")
+    print(f"✓ Submission dosyası created: {filename}")
     print(f"  Total prediction sayısı: {len(submission_df):,}")
     print(f"\nPrediction Distribution:")
     print(submission_df['status_group'].value_counts())
@@ -1502,7 +1502,7 @@ submission = create_submission(
     test_ids=test_ids,
     X_test=X_test,
     encoders=encoders,
-    fwithname='submission.csv'
+    filename='submission.csv'
 )
 
 
@@ -1560,7 +1560,7 @@ def save_model_and_artifacts(model, encoders, scaler, feature_names,
     joblib.dump(feature_names, features_path)
     print(f"✓ Feature names kaydedildi: {features_path}")
     
-    # Metadata (model bilgwithri)
+    # Metadata (model information)
     metadata = {
         'model_type': type(model).__name__,
         'training_date': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
@@ -1592,7 +1592,7 @@ save_model_and_artifacts(
 # 
 # def load_model_and_predict(new_data_path, model_name='water_pump_model_v1'):
 #     """
-#     Kaydedilmiş modeli loadr ve new verwithr üzerinde prediction yapar
+#     Kaydedilmiş modeli loadr ve new given üzerinde prediction yapar
 #     
 #     Parameters:
 #     -----------
@@ -1641,7 +1641,7 @@ save_model_and_artifacts(
 #     
 #     # Decode
 #     if 'status_group' in encoders:
-#         predictions_decoded = encoders['status_group'].inverse_transform(predictions)
+#         predictions_decoded = encoders['status_group'].inverse_transformrm(predictions)
 #     
 #     # Sonuç DataFrame
 #     result_df = pd.DataFrame({
