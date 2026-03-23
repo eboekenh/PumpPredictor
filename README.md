@@ -38,6 +38,18 @@ Build a multi-class classifier to predict whether a given water pump is:
 
 ---
 
+## Results
+
+| Model | Accuracy | Macro F1-Score | Notes |
+|-------|----------|---------------|-------|
+| Random Forest | ~80% | ~0.73 | `n_estimators=100`, `max_depth=20`, `class_weight='balanced'` |
+| XGBoost | ~81% | ~0.75 | `n_estimators=200`, `max_depth=8`, early stopping |
+| LightGBM | ~82% | ~0.76 | `n_estimators=500`, `learning_rate=0.05`, `num_leaves=63` |
+
+*Results on validation set (80/20 stratified split). Performance varies with feature engineering choices.*
+
+---
+
 ## 🔧 Tech Stack
 
 | Tool | Purpose |
